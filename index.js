@@ -11,8 +11,8 @@ app.use(cors())
 app.use('/',userRouter)
 
 
-app.listen(process.env.PORT,async(req,res)=>{
-    console.log(`http://localhost:${process.env.PORT}`);
+app.listen(7777,async(req,res)=>{
+    console.log(`http://localhost:7777`);
     try{
         connection
         console.log("connected to data base")
