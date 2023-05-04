@@ -52,7 +52,7 @@ async function sendlinkverificationEmail({_id,email},res){
         from: `${process.env.mail}`,
         to: email, 
         subject: "Acoount verification for chatapp ✔",
-        html: `<b> Please go through by this link for verification http://localhost:1111/app/user/verify/${code}/${_id}<b>`, 
+        html: `<b> Please go through by this link for verification https://easy-erin-buffalo-cape.cyclic.app/app/user/verify/${code}/${_id}<b>`, 
       };
 
     const newlink = await LinkModel({
