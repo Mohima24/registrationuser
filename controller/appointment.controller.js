@@ -103,27 +103,37 @@ exports.getlotsDetailsforDoctor = async(req,res)=>{
     }
 }
 exports.getavailableslot = async(req,res)=>{
-    const {doctorId} = req.params;
-    const availableSlot = await DoctorModel.findOne(
-        {
-            "_id": doctorId,
-            "timings.status": false
-        },
-        {
-            "timings.$": 1
+    try{
+        const {doctorId} = req.params;
+        const availableSlots = await DoctorModel.aggregate([
+            { $match: { _id:new mongoose.Types.ObjectId(doctorId) } },
+            {
+              $project: {
+                timings: {
+                  $filter: {
+                    input: "$timings",
+                    as: "timing",
+                    cond: { $eq: ["$$timing.status", false] }
+                  }
+                }
+              }
+            }
+          ])
+          
+        if(availableSlots){
+            return res.send({
+                status:"OK",
+                data:availableSlots
+            })
         }
-    )
-    console.log(availableSlot)
-    if(availableSlot){
-        return res.send({
-            status:"OK",
-            data:availableSlot.timings
+        
+        res.status(404).send({
+            status:"FAILED",
+            "message":"No Data Found"
         })
+    }catch(err){
+        console.log(err)
     }
-    res.status(404).send({
-        status:"FAILED",
-        "message":"No Data Found"
-    })
 }
 
 
