@@ -91,7 +91,7 @@ exports.bookingoute = async(req,res)=>{
 exports.getlotsDetailsforDoctor = async(req,res)=>{
     const { userID } = req.body;
     try{
-        const slotDetails = await DoctorModel.findById({userId:userID})
+        const slotDetails = await DoctorModel.find({userId:userID})
 
         res.send({
             status:"OK",

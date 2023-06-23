@@ -11,7 +11,7 @@ AppontmentRouter.get("/",(req,res)=>{
 
 AppontmentRouter.patch("/create-slot",authentication,authorized("Doctor"),appointmentController.createSlots)
 AppontmentRouter.post("/book-slot",authentication,authorized(["Patient","Doctor"]),appointmentController.bookingoute)
-AppontmentRouter.get("/doctor-slot-details",authentication,appointmentController.getlotsDetailsforDoctor)
+AppontmentRouter.get("/doctor-slot-details",authentication,authorized("Doctor"),appointmentController.getlotsDetailsforDoctor)
 AppontmentRouter.get("/available-slot/:doctorId",appointmentController.getavailableslot)
 
 
