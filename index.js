@@ -1,31 +1,27 @@
-const express = require('express')
-const http = require('http');
-const app = express()
-const socketio = require('socket.io');
-const server = http.createServer(app)
-app.use(express.json())
-const connection = require('./config/db')
-const userRouter = require('./router/user.router')
-const cors = require('cors');
-app.use(cors())
+const express = require("express");
+const {connection}= require("./config/db");
+const {UserRouter} = require('./router/user.router');
+const { AppontmentRouter } = require("./router/appointment.router");
+let cors= require("cors");
+require("dotenv").config();
 
-app.use('/app/user',userRouter)
-const io = socketio(server)
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-io.on("connection",(socket)=>{
-    console.log("One client joined")
+app.use('/user',UserRouter)
+app.use("/booking",AppontmentRouter)
 
-    socket.on("joinroom",({username})=>{
-        console.log(username)
-    })
+app.get("/",(req,res)=>{
+    res.send("Home page");
 })
 
-server.listen(1111,()=>{
-    console.log("http://localhost:1111/")
+app.listen(process.env.port,async()=>{
     try{
-        connection
-        console.log("connected with database")
-    }catch(err){
-        console.log("error while connecting db")
+        await connection
+        console.log(`http://localhost:${process.env.port}`)
+    }
+    catch(err){
+        console.log(err)
     }
 })

@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
+require("dotenv").config()
 
-const connection = mongoose.connect('mongodb+srv://Mohima:mohima@cluster0.nniwend.mongodb.net/chatapp')
+mongoose.set('strictQuery', false)
+const connection = mongoose.connect(process.env.mongoUrl)
 
-module.exports= connection;
+module.exports={
+    connection
+}

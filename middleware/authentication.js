@@ -1,24 +1,33 @@
-const jwt = require('jsonwebtoken')
+const jwt= require("jsonwebtoken")
+require("dotenv").config()
 
-const authentication = (req,res,next)=>{
-    let token  = req.headers.authorization;
-    if(token){
-        jwt.verify(token, 'userToken', (err, decoded) =>{
-            if(err){
-                console.log(token)
-                res.status(501)
-                res.send({msg:"error while verify the token"})
-                return
-            }else{
-                req.body.userID = decoded.userID;
-                req.body.email = decoded.useremail;
-                next()
-            }
-        })
-    }else{
-        res.status(403)
-        res.send({msg:"please log in first"})
+const Authentication=(req,res,next)=>{
+
+    let token = req.headers.authorization;
+
+    if(!token){
+
+        return res.send({status:"FAILED","messasg":"please log in"})
+        
     }
+
+    const decode= jwt.verify(token,process.env.userkey);
+
+    if(!decode){
+
+        return res.send({status:"FAILED","messasg":"please log in"})
+        
+    }else{
+
+        const userID = decode.userID;
+        const userRole = decode.userRole;
+        req.body.userID=userID;
+        req.body.userRole = userRole;
+        next();
+        
+    }  
 }
 
-module.exports = authentication
+module.exports={
+    Authentication
+}
