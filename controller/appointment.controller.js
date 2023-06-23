@@ -2,6 +2,7 @@ const { Usermodel } = require("../model/user.model");
 const nodemailer= require("nodemailer");
 const { DoctorModel } = require("../model/doctor.model");
 const { AppointmentModel } = require("../model/appointment.model");
+const mongoose = require('mongoose')
 require("dotenv").config();
 
 
