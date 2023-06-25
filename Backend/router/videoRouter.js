@@ -14,7 +14,7 @@ VideoRouter.get('/room/:room', (req, res) => {
   console.log(filePath)
   res.sendFile(filePath);
 });
-
+console.log(__dirname)
 module.exports = {
   VideoRouter
 };
