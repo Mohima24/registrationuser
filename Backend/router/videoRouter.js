@@ -10,7 +10,8 @@ VideoRouter.get('/:id', (req, res) => {
   res.redirect(`/video/room/${id}`);
 });
 VideoRouter.get('/room/:room', (req, res) => {
-  const filePath = path.join(__dirname,'../../Frontend/room.html');
+  const filePath = path.join(__dirname,'../Frontend/room.html');
+  console.log(filePath)
   res.sendFile(filePath);
 });
 
