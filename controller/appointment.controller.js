@@ -91,6 +91,7 @@ exports.bookingoute = async(req,res)=>{
 
 exports.getlotsDetailsforDoctor = async(req,res)=>{
     const { userID } = req.body;
+
     try{
         const slotDetails = await DoctorModel.find({userId:userID})
 
@@ -100,6 +101,7 @@ exports.getlotsDetailsforDoctor = async(req,res)=>{
         })
 
     }catch(err){
+        console.log(err)
         res.send(err)
     }
 }
@@ -184,4 +186,15 @@ async function sendEmailForBookingConfirmation({userInfo,userId:userID,doctorId,
         console.log("while sending mail")
         console.log(err)
     }
+}
+
+exports.getAppointDetailsforuser = async(req,res) =>{
+    const {userID} = req.body;
+    const appointmentDetails = await AppointmentModel.find({userId:userID})
+    res.send(appointmentDetails)
+}
+exports.getAppointDetailsforDoctor = async(req,res) =>{
+    const {userID} = req.body;
+    const appointmentDetails = await AppointmentModel.find({doctorId:userID})
+    res.send(appointmentDetails)
 }
