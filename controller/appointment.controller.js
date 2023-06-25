@@ -166,13 +166,13 @@ async function sendEmailForBookingConfirmation({userInfo,userId:userID,doctorId,
             `
         }
         res.send(payload)
-        // await transporter.sendMail(mailoptions)
+        await transporter.sendMail(mailoptions)
 
-        // await DoctorModel.findOneAndUpdate(
-        //     { _id: doctorId, "timings.time": slotTimming },
-        //     { $set: { "timings.$.status": true,"timings.$.clientDetails":userInfo } }
-        //   );
-        // await payload.save()
+        await DoctorModel.findOneAndUpdate(
+            { _id: doctorId, "timings.time": slotTimming },
+            { $set: { "timings.$.status": true,"timings.$.clientDetails":userInfo } }
+          );
+        await payload.save()
         res.send({
         status:"OK",
         message:"Slot has booked Successfully"
