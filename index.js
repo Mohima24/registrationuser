@@ -18,9 +18,6 @@ app.use(express.json());
 app.use('/user',UserRouter)
 app.use("/booking",AppontmentRouter)
 app.use("/video",VideoRouter)
-app.get("/",(req,res)=>{
-    res.send("Home page");
-})
 
 io.on('connection', socket => {
     socket.on('join-room', (roomId, userId) => {
