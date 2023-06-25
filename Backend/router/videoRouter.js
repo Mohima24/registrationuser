@@ -4,17 +4,6 @@ const VideoRouter = express.Router();
 VideoRouter.get('/', (req, res) => {
   res.send('hello');
 });
-
-VideoRouter.get('/:id', (req, res) => {
-  const { id } = req.params;
-  res.redirect(`/video/room/${id}`);
-});
-VideoRouter.get('/room/:room', (req, res) => {
-  const filePath = path.join(__dirname,'../Frontend/room.html');
-  console.log(filePath)
-  res.sendFile(filePath);
-});
-console.log(__dirname)
 module.exports = {
   VideoRouter
 };
