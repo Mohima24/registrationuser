@@ -1,7 +1,12 @@
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: 'https://example.com',
+    methods: ['GET', 'POST'],
+  },
+});
 
 const {connection}= require("./config/db");
 const {UserRouter} = require('./router/userrouter');
