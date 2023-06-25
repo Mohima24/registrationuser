@@ -191,10 +191,12 @@ async function sendEmailForBookingConfirmation({userInfo,userId:userID,doctorId,
 exports.getAppointDetailsforuser = async(req,res) =>{
     const {userID} = req.body;
     const appointmentDetails = await AppointmentModel.find({userId:userID})
-    res.send(appointmentDetails)
+    const doctorinfo = await DoctorModel.findById({_id:appointmentDetails[0].doctorId})
+    res.send({status:"OK",data:AppointmentModel,doctorinfo})
 }
 exports.getAppointDetailsforDoctor = async(req,res) =>{
     const {userID} = req.body;
     const appointmentDetails = await AppointmentModel.find({doctorId:userID})
-    res.send(appointmentDetails)
+    const doctorinfo = await DoctorModel.findById({_id:userID})
+    res.send({status:"OK",data:AppointmentModel,doctorinfo})
 }
