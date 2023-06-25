@@ -165,14 +165,14 @@ async function sendEmailForBookingConfirmation({userInfo,userId:userID,doctorId,
             <p>Booking Time: ${formattedDatetime} ${date}-${month}-${year}</p>
             `
         }
+        res.send(payload)
+        // await transporter.sendMail(mailoptions)
 
-        await transporter.sendMail(mailoptions)
-
-        await DoctorModel.findOneAndUpdate(
-            { _id: doctorId, "timings.time": slotTimming },
-            { $set: { "timings.$.status": true,"timings.$.clientDetails":userInfo } }
-          );
-        await payload.save()
+        // await DoctorModel.findOneAndUpdate(
+        //     { _id: doctorId, "timings.time": slotTimming },
+        //     { $set: { "timings.$.status": true,"timings.$.clientDetails":userInfo } }
+        //   );
+        // await payload.save()
         res.send({
         status:"OK",
         message:"Slot has booked Successfully"
@@ -191,12 +191,10 @@ async function sendEmailForBookingConfirmation({userInfo,userId:userID,doctorId,
 exports.getAppointDetailsforuser = async(req,res) =>{
     const {userID} = req.body;
     const appointmentDetails = await AppointmentModel.find({userId:userID})
-    const doctorinfo = await DoctorModel.findById({_id:appointmentDetails[0].doctorId})
-    res.send({status:"OK",data:appointmentDetails,doctorinfo})
+    res.send({status:"OK",data:appointmentDetails})
 }
 exports.getAppointDetailsforDoctor = async(req,res) =>{
     const {userID} = req.body;
     const appointmentDetails = await AppointmentModel.find({doctorId:userID})
-    const doctorinfo = await DoctorModel.findById({_id:userID})
-    res.send({status:"OK",data:appointmentDetails,doctorinfo})
+    res.send({status:"OK",data:appointmentDetails})
 }
