@@ -190,8 +190,13 @@ async function sendEmailForBookingConfirmation({userInfo,userId:userID,doctorId,
 
 exports.getAppointDetailsforuser = async(req,res) =>{
     const {userID} = req.body;
-    const appointmentDetails = await AppointmentModel.find({userId:userID})
-    res.send({status:"OK",data:appointmentDetails})
+    try{
+        const appointmentDetails = await AppointmentModel.find({userId:userID})
+        res.send({status:"OK",data:appointmentDetails})
+    }
+    catch(err){
+        console.log(err)
+    }
 }
 exports.getAppointDetailsforDoctor = async(req,res) =>{
     const {userID} = req.body;
